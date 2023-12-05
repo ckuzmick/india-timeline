@@ -5,6 +5,7 @@ import { useRef, useEffect } from 'react';
 
 const Timeline = () => {
     const svgRef = useRef(null);
+    const tooltipRef = useRef(null);
 
     useEffect(() => {
         const margin = { top: 30, right: 50, bottom: 30, left: 50 },
@@ -17,6 +18,14 @@ const Timeline = () => {
             .attr("class", "plot")
             .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`)
+
+        const tooltipDiv = d3.select(tooltipRef.current)
+            .style("position", "fixed")
+            .style("top", "0")
+            .style("right", "0")
+            .style("height", "100%")
+            .style("width", "200px") // Set the width of the fixed div
+            .style("overflow-y", "auto");
 
         d3.csv('https://raw.githubusercontent.com/ckuzmick/d3-file-hosting/main/data.csv').then(data => {
 
@@ -34,26 +43,38 @@ const Timeline = () => {
             .attr("class", "event")
             .attr("transform", d => `translate(0, ${y(+d.Year)})`);
 
-        // Add text labels for events
         events.append("text")
             .attr("class", "event-label")
-            .attr("x", 10)
+            .attr("x", 25)
             .attr("y", 5)
-            .text(d => d.Event);
+            .text(d => d.Year + ' - ' + d.Event)
+            .on("mouseover", function (event, d) {
+                // Show tooltip on hover
+                tooltipDiv.text(d.Event);
+            })
+            .on("mouseout", function () {
+                // Hide tooltip on mouseout
+                tooltipDiv.text("");
+            });
 
-        // Add lines connecting events to the axis
+            
         events.append("line")
             .attr("class", "event-line")
             .attr("x1", 0)
             .attr("y1", 0)
-            .attr("x2", 5) // align with the axis
+            .attr("x2", 20)
             .attr("y2", 0)
             .style("stroke", "black")
-            .style("stroke-width", 2);
+            .style("stroke-width", 1);
         });
-    }, []); // <-- closing parenthesis for useEffect hook
+    }, []);
 
-    return <svg ref={svgRef} className='place-self-center'/>;
+    return (
+        <div style={{ display: 'flex', height: '100%' }}>
+            <svg ref={svgRef} className='place-self-center' />
+            <div ref={tooltipRef}></div>
+        </div>
+    );
 }
 
 export default Timeline;
