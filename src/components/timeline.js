@@ -2,6 +2,7 @@
 
 import * as d3 from 'd3';
 import { useRef, useEffect } from 'react';
+import '@/app/globals.css'
 
 const Timeline = () => {
     const svgRef = useRef(null);
@@ -24,8 +25,9 @@ const Timeline = () => {
             .style("top", "0")
             .style("right", "0")
             .style("height", "100%")
-            .style("width", "200px") // Set the width of the fixed div
-            .style("overflow-y", "auto");
+            .style("width", "50%") // Set the width of the fixed div
+            .style("overflow-y", "auto")
+            .style("padding", "20px");
 
         d3.csv('https://raw.githubusercontent.com/ckuzmick/d3-file-hosting/main/data.csv').then(data => {
 
@@ -50,11 +52,14 @@ const Timeline = () => {
             .text(d => d.Year + ' - ' + d.Event)
             .on("mouseover", function (event, d) {
                 // Show tooltip on hover
-                tooltipDiv.text(d.Event);
+                tooltipDiv.html(`
+                    <h3>${d.Event}</h3>
+                    <p>Additional text or description here.</p>
+                `);
             })
             .on("mouseout", function () {
                 // Hide tooltip on mouseout
-                tooltipDiv.text("");
+                tooltipDiv.html("");
             });
 
             
