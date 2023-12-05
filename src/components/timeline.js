@@ -24,10 +24,9 @@ const Timeline = () => {
             .style("position", "fixed")
             .style("top", "0")
             .style("right", "0")
-            .style("height", "100%")
+            .style("height", "50%")
             .style("width", "50%") // Set the width of the fixed div
             .style("overflow-y", "auto")
-            .style("padding", "20px");
 
         d3.csv('https://raw.githubusercontent.com/ckuzmick/d3-file-hosting/main/data.csv').then(data => {
 
@@ -54,6 +53,7 @@ const Timeline = () => {
                 // Show tooltip on hover
                 tooltipDiv.html(`
                     <h3>${d.Event}</h3>
+                    <img src="https://www.thoughtco.com/thmb/U8xGU9kfUyTlohoYWuPXAYHFF1k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/indian-uprising-108021902-8b6ddc0d00d84612bd59c0361a8d2995.jpg" />
                     <p>Additional text or description here.</p>
                 `);
             })
@@ -77,7 +77,7 @@ const Timeline = () => {
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <svg ref={svgRef} className='place-self-center' />
-            <div ref={tooltipRef}></div>
+            <div ref={tooltipRef} className='tooltip-div'></div>
         </div>
     );
 }

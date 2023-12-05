@@ -7,3 +7,12 @@ h3 {
   font-size: 32px;
   font-weight: 700;
 }
+
+img {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.tooltip-div {
+  margin: 30px;
+}
