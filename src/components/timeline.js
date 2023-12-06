@@ -25,7 +25,7 @@ const Timeline = () => {
             .style("top", "0")
             .style("right", "0")
             .style("height", "100%")
-            .style("width", "600px") // Set the width of the fixed div
+            .style("width", "350px") // Set the width of the fixed div
             .style("overflow-y", "auto")
 
         d3.csv('https://raw.githubusercontent.com/ckuzmick/d3-file-hosting/main/data.csv').then(data => {
