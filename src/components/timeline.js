@@ -48,6 +48,7 @@ const Timeline = () => {
             .attr("class", "event-label")
             .attr("x", 25)
             .attr("y", 5)
+            .style("cursor", "pointer")
             .text(d => d.Year + ' - ' + d.Event)
             .on("mouseover", function (event, d) {
                 // Show tooltip on hover
