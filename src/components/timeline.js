@@ -24,7 +24,7 @@ const Timeline = () => {
             .style("position", "fixed")
             .style("top", "0")
             .style("right", "0")
-            .style("height", "50%")
+            .style("height", "100%")
             .style("width", "50%") // Set the width of the fixed div
             .style("overflow-y", "auto")
 
@@ -53,8 +53,8 @@ const Timeline = () => {
                 // Show tooltip on hover
                 tooltipDiv.html(`
                     <h3>${d.Event}</h3>
-                    <img src="https://www.thoughtco.com/thmb/U8xGU9kfUyTlohoYWuPXAYHFF1k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/indian-uprising-108021902-8b6ddc0d00d84612bd59c0361a8d2995.jpg" />
-                    <p>Additional text or description here.</p>
+                    <img src="${d.Image}" />
+                    <p>${d.Description}</p>
                 `);
             })
             .on("mouseout", function () {
