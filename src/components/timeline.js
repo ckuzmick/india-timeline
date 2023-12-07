@@ -85,13 +85,6 @@ const Timeline = () => {
                             <img src="${d.Image}" />
                             <p>${d.Description}</p>
                         </div>
-                        <div>
-                            <ul>
-                                <li>Red: Start or end of an era</li>
-                                <li>Blue: Major event</li>
-                                <li>Purple: Political event</li>
-                            </ul>
-                        </div>
                 `);
             })
             .on("mouseout", function () {
