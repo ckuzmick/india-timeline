@@ -9,7 +9,7 @@ const Timeline = () => {
     const tooltipRef = useRef(null);
 
     useEffect(() => {
-        const margin = { top: 50, right: 50, bottom: 50, left: 50 },
+        const margin = { top: 50, right: 50, bottom: 50, left: 70 },
             width = 700 - margin.left - margin.right,
             height = 2 * window.innerHeight - margin.top - margin.bottom;
 
@@ -49,7 +49,7 @@ const Timeline = () => {
             .range(d3.schemeSet1);
 
         svg.append("g")
-            .call(d3.axisLeft(y).tickValues([]))
+            .call(d3.axisLeft(y).tickFormat(d3.format("d")));
 
         const spacing = 20; // Adjust this value to control the spacing
 
@@ -69,6 +69,8 @@ const Timeline = () => {
             .attr("class", "event")
             .attr("transform", d => `translate(0, ${y(+d.Year)})`);
 
+        let selectedEvent = null;
+
         events.append("text")
             .attr("class", "event-label")
             .attr("x", 25)
@@ -77,28 +79,24 @@ const Timeline = () => {
             .style("fill", d => color(d.Category))
             .style("font-weight", "700")
             .text(d => d.Year + ' - ' + d.Event)
-            .on("mouseover", function (event, d) {
-                // Show tooltip on hover
-                tooltipDiv.html(`
+            .on("click", function (event, d) {
+                const isVisible = tooltipDiv.style("display") === "block";
+        
+                // Check if tooltip is already visible and the user clicked on a different element
+                if (isVisible && selectedEvent !== d) {
+                    tooltipDiv.style("display", "none");
+                } else {
+                    // Toggle tooltip visibility
+                    tooltipDiv.style("display", isVisible ? "none" : "block");
+                    selectedEvent = isVisible ? null : d; // Update the selected event
+                    tooltipDiv.html(`
                         <div>
                             <h3>${d.Event}</h3>
                             <img src="${d.Image}" />
                             <p>${d.Description}</p>
                         </div>
-                `);
-            })
-            .on("mouseout", function () {
-                // Hide tooltip on mouseout
-                tooltipDiv.html(`
-                <div></div>
-                <div>
-                    <ul>
-                        <li>Red: Start or end of an era</li>
-                        <li>Blue: Major event</li>
-                        <li>Purple: Political event</li>
-                    </ul>
-                </div>
-                `);
+                    `);
+                }
             });
 
             
